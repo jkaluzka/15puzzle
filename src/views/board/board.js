@@ -28,6 +28,29 @@ class Board extends React.Component {
     });
   }
 
+  getTileAdjacent (tile) {
+    const {columns, rows, tiles} = this.state;
+    const tileIdx = tiles.indexOf(tile);
+    const row = Math.floor(tileIdx / rows);
+    const col = tileIdx - (row * rows);
+    let adjacent = [];
+
+    if (row > 0) {adjacent.push(tiles[(rows * row) + col - 1]);}
+    if (row < rows) {adjacent.push(tiles[(rows * row) + col + 1]);}
+    if (col > 0) {adjacent.push(tiles[rows * (row - 1) + col]);}
+    if (col < columns) {adjacent.push(tiles[rows * (row + 1) + col]);}
+
+    return adjacent.filter(t => typeof t !== 'undefined');
+  }
+
+  getEmptyAdjacentIdx (tile) {
+    const {tiles} = this.state;
+    let adjacent = this.getTileAdjacent(tile);
+    if (adjacent.some(t => t === null)) {
+      return tiles.indexOf(null);
+    }
+  }
+
   render () {
     const {tiles} = this.state;
 
