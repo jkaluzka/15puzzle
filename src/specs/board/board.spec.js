@@ -62,4 +62,22 @@ describe('Board', () => {
     expected[11] = null;
     expect(JSON.stringify(board.state.tiles) === JSON.stringify(expected)).toBe(true);
   });
+
+  it('test isSolved returns true', () => {
+    const board = renderer.create(<Board />).root.instance;
+    let tiles = data.map(t => t);
+    board.setState({tiles: tiles});
+    let solved = board.isSolved();
+    expect(solved).toBe(true);
+  });
+
+  it('test isSolved returns false', () => {
+    const board = renderer.create(<Board />).root.instance;
+    let tiles = data.map(t => t);
+    tiles[0] = 2;
+    tiles[1] = 1;
+    board.setState({tiles: tiles});
+    let solved = board.isSolved();
+    expect(solved).toBe(false);
+  });
 });

@@ -12,7 +12,6 @@ const styles = {
   },
 };
 
-
 class Board extends React.Component {
   constructor (props) {
     super(props);
@@ -63,14 +62,28 @@ class Board extends React.Component {
     }
   }
 
-  onTileClick(tile) {
-    const {tiles}  = this.state;
+  onTileClick (tile) {
+    const {tiles} = this.state;
     let tileIdx = tiles.indexOf(tile);
     let idx = this.getEmptyAdjacentIdx(tile);
     if (!!idx) {
       [tiles[idx], tiles[tileIdx]] = [tiles[tileIdx], tiles[idx]];
       this.setState({tiles: tiles});
     }
+
+    if (this.isSolved()) {
+      alert('congratulations, you solved it!');
+    }
+  }
+
+  isSolved () {
+    const {tiles} = this.state;
+    for (let i = tiles.length - 2; i >= 0; i--) {
+      if (tiles[i] !== i + 1) {
+        return false;
+      }
+    }
+    return true;
   }
 
   render () {
