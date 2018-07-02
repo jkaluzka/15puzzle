@@ -2,6 +2,10 @@
 
 exports[`Board renders Board component correctly 1`] = `
 <h1>
-  15 Puzzle Boards
+  15 Puzzle Boards (
+  4
+   x 
+  4
+   )
 </h1>
 `;

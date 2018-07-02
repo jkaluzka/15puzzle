@@ -43,4 +43,23 @@ describe('Board', () => {
     let adjacentIdx = board.getEmptyAdjacentIdx(12);
     expect(adjacentIdx).toBe(15);
   });
+
+  it('test onTileClick do nothing', () => {
+    const board = renderer.create(<Board />).root.instance;
+    let tiles = data.map(t => t);
+    board.setState({tiles: tiles});
+    board.onTileClick(7);
+    expect(JSON.stringify(board.state.tiles) === JSON.stringify(data)).toBe(true);
+  });
+
+  it('test onTileClick swap tile with null one', () => {
+    const board = renderer.create(<Board />).root.instance;
+    let tiles = data.map(t => t);
+    board.setState({tiles: tiles});
+    board.onTileClick(12);
+    let expected = data.map(t => t);
+    expected[15] = 12;
+    expected[11] = null;
+    expect(JSON.stringify(board.state.tiles) === JSON.stringify(expected)).toBe(true);
+  });
 });

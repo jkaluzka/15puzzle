@@ -1,5 +1,17 @@
 import React from 'react';
+
+import Button from '@material-ui/core/Button/Button';
+
 import { shuffle } from '../utils';
+
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+};
+
 
 class Board extends React.Component {
   constructor (props) {
@@ -51,14 +63,36 @@ class Board extends React.Component {
     }
   }
 
+  onTileClick(tile) {
+    const {tiles}  = this.state;
+    let tileIdx = tiles.indexOf(tile);
+    let idx = this.getEmptyAdjacentIdx(tile);
+    if (!!idx) {
+      [tiles[idx], tiles[tileIdx]] = [tiles[tileIdx], tiles[idx]];
+      this.setState({tiles: tiles});
+    }
+  }
+
   render () {
-    const {tiles} = this.state;
+    const {columns, rows, tiles} = this.state;
+    const width = 56 * columns;
 
     return (
-      <div>
-        <h1>15 Puzzle Boards</h1>
-        <div>
-          {tiles.map((tile, idx) => <span key={idx}> | {tile} | </span>)}
+      <div style={styles.container}>
+        <h1>15 Puzzle Boards ({rows} x {columns} )</h1>
+        <div style={{display: 'flex', flexWrap: 'wrap', width: width}}>
+          {tiles.map((tile, idx) => (
+              !!tile ?
+                <Button key={idx} variant='fab'
+                        onClick={() => this.onTileClick(tile)}
+                        style={{width: '50px', margin: '3px', backgroundColor: tile % 2 === 0 ? 'red' : 'green'}}>
+                  {tile}
+                </Button> :
+                <Button disabled key={idx} variant='fab' style={{width: '50px', margin: '3px', backgroundColor: 'white'}}>
+                  <span></span>
+                </Button>
+            ),
+          )}
         </div>
       </div>
     );
