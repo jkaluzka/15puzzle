@@ -2,7 +2,7 @@
   "name": "15puzzle",
   "version": "0.0.1",
   "author": "Jakub Kaluzka",
-  "description": "ReactJS implementation of 15puzzle problem.",
+  "description": "ReactJS implementation of 15puzzle game.",
   "license": "MIT",
   "main": "webpack.config.js",
   "scripts": {

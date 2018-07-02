@@ -7,4 +7,9 @@ describe('Board', () => {
     const tree = renderer.create(<Board />).toJSON();
     expect(tree.children[0]).toMatchSnapshot();
   });
+
+  it('initializing Board when creating component', () => {
+    const board = renderer.create(<Board />).root.instance;
+    expect(board.state.tiles.length).toBe(16);
+  });
 });
