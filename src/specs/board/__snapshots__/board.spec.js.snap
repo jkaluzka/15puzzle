@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Board renders Board component correctly 1`] = `
+<h1>
+  15 Puzzle Boards
+</h1>
+`;
