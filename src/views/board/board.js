@@ -46,9 +46,9 @@ class Board extends React.Component {
     const col = tileIdx - (row * rows);
     let adjacent = [];
 
-    if (row > 0) {adjacent.push(tiles[(rows * row) + col - 1]);}
+    if (row >= 0) {adjacent.push(tiles[(rows * row) + col - 1]);}
     if (row < rows) {adjacent.push(tiles[(rows * row) + col + 1]);}
-    if (col > 0) {adjacent.push(tiles[rows * (row - 1) + col]);}
+    if (col >= 0) {adjacent.push(tiles[rows * (row - 1) + col]);}
     if (col < columns) {adjacent.push(tiles[rows * (row + 1) + col]);}
 
     return adjacent.filter(t => typeof t !== 'undefined');
@@ -66,8 +66,10 @@ class Board extends React.Component {
     const {tiles} = this.state;
     let tileIdx = tiles.indexOf(tile);
     let idx = this.getEmptyAdjacentIdx(tile);
-    if (!!idx) {
-      [tiles[idx], tiles[tileIdx]] = [tiles[tileIdx], tiles[idx]];
+    if (idx >= 0) {
+      let tmp = tiles[idx];
+      tiles[idx] = tiles[tileIdx];
+      tiles[tileIdx] = tmp;
       this.setState({tiles: tiles});
     }
 

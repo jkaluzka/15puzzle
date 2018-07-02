@@ -10,6 +10,10 @@ describe('Board', () => {
     13, 14, 15, null,
   ];
 
+  function compareArrays(array1, array2) {
+    return JSON.stringify(array1) === JSON.stringify(array2);
+  }
+
   it('renders Board component correctly', () => {
     const tree = renderer.create(<Board />).toJSON();
     expect(tree.children[0]).toMatchSnapshot();
@@ -49,7 +53,7 @@ describe('Board', () => {
     let tiles = data.map(t => t);
     board.setState({tiles: tiles});
     board.onTileClick(7);
-    expect(JSON.stringify(board.state.tiles) === JSON.stringify(data)).toBe(true);
+    expect(compareArrays(board.state.tiles, data)).toBe(true);
   });
 
   it('test onTileClick swap tile with null one', () => {
@@ -60,7 +64,20 @@ describe('Board', () => {
     let expected = data.map(t => t);
     expected[15] = 12;
     expected[11] = null;
-    expect(JSON.stringify(board.state.tiles) === JSON.stringify(expected)).toBe(true);
+    expect(compareArrays(board.state.tiles, expected)).toBe(true);
+  });
+
+  it('test onTileClick swap tile with null (edge case, left upper corner)', () => {
+    const board = renderer.create(<Board />).root.instance;
+    let tiles = data.map(t => t);
+    tiles[0] = null;
+    tiles[15] = 1;
+    board.setState({tiles: tiles});
+    board.onTileClick(2);
+    let expected = tiles.map(t => t);
+    expected[0] = 2;
+    expected[1] = null;
+    expect(compareArrays(board.state.tiles, expected)).toBe(true);
   });
 
   it('test isSolved returns true', () => {
