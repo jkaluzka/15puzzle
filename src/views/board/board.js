@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '@material-ui/core/Button/Button';
+import Fab from '@material-ui/core/Fab';
 
 import { shuffle } from '../utils';
 
@@ -74,7 +74,7 @@ class Board extends React.Component {
     }
 
     if (this.isSolved()) {
-      alert('congratulations, you solved it!');
+      console.info('congratulations, you solved it!');
     }
   }
 
@@ -98,14 +98,14 @@ class Board extends React.Component {
         <div style={{display: 'flex', flexWrap: 'wrap', width: width}}>
           {tiles.map((tile, idx) => (
               !!tile ?
-                <Button key={idx} variant='fab'
+                <Fab key={idx}
                         onClick={() => this.onTileClick(tile)}
                         style={{width: '50px', margin: '3px', backgroundColor: tile % 2 === 0 ? 'red' : 'green'}}>
                   {tile}
-                </Button> :
-                <Button disabled key={idx} variant='fab' style={{width: '50px', margin: '3px', backgroundColor: 'white'}}>
+                </Fab> :
+                <Fab disabled key={idx} style={{width: '50px', margin: '3px', backgroundColor: 'white'}}>
                   <span></span>
-                </Button>
+                </Fab>
             ),
           )}
         </div>
