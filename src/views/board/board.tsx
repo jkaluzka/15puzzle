@@ -1,19 +1,16 @@
-import React from 'react';
-
 import Fab from '@material-ui/core/Fab';
+import * as React from 'react';
 
-import { shuffle } from '../utils';
+import {shuffle} from '../utils';
 
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-};
+const container = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+} as React.CSSProperties;
 
-class Board extends React.Component {
-  constructor (props) {
+class Board extends React.Component<React.CSSProperties, any> {
+  constructor(props: any) {
     super(props);
 
     this.state = {
@@ -23,15 +20,15 @@ class Board extends React.Component {
     };
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.initBoard();
   }
 
-  initBoard () {
+  initBoard() {
     const {columns, rows} = this.state;
     let size = rows * columns - 1;
     let tiles = Array.from(Array(size).keys(), (v, k) => k + 1);
-    tiles.push(null);
+    tiles.push(null as any);
     shuffle(tiles);
 
     this.setState({
@@ -39,7 +36,7 @@ class Board extends React.Component {
     });
   }
 
-  getTileAdjacent (tile) {
+  getTileAdjacent(tile: any) {
     const {columns, rows, tiles} = this.state;
     const tileIdx = tiles.indexOf(tile);
     const row = Math.floor(tileIdx / rows);
@@ -54,7 +51,7 @@ class Board extends React.Component {
     return adjacent.filter(t => typeof t !== 'undefined');
   }
 
-  getEmptyAdjacentIdx (tile) {
+  getEmptyAdjacentIdx(tile: any) {
     const {tiles} = this.state;
     let adjacent = this.getTileAdjacent(tile);
     if (adjacent.some(t => t === null)) {
@@ -62,7 +59,7 @@ class Board extends React.Component {
     }
   }
 
-  onTileClick (tile) {
+  onTileClick(tile: any) {
     const {tiles} = this.state;
     let tileIdx = tiles.indexOf(tile);
     let idx = this.getEmptyAdjacentIdx(tile);
@@ -78,7 +75,7 @@ class Board extends React.Component {
     }
   }
 
-  isSolved () {
+  isSolved() {
     const {tiles} = this.state;
     for (let i = tiles.length - 2; i >= 0; i--) {
       if (tiles[i] !== i + 1) {
@@ -88,24 +85,24 @@ class Board extends React.Component {
     return true;
   }
 
-  render () {
+  render() {
     const {columns, rows, tiles} = this.state;
     const width = 56 * columns;
 
     return (
-      <div style={styles.container}>
+      <div style={container}>
         <h1>15 Puzzle Boards ({rows} x {columns} )</h1>
         <div style={{display: 'flex', flexWrap: 'wrap', width: width}}>
-          {tiles.map((tile, idx) => (
+          {tiles.map((tile: any, idx: number) => (
               !!tile ?
-                <Fab key={idx}
-                        onClick={() => this.onTileClick(tile)}
-                        style={{width: '50px', margin: '3px', backgroundColor: tile % 2 === 0 ? 'red' : 'green'}}>
-                  {tile}
-                </Fab> :
-                <Fab disabled key={idx} style={{width: '50px', margin: '3px', backgroundColor: 'white'}}>
-                  <span></span>
-                </Fab>
+              <Fab key={idx}
+                   onClick={() => this.onTileClick(tile)}
+                   style={{width: '50px', margin: '3px', backgroundColor: tile % 2 === 0 ? 'red' : 'green'}}>
+                {tile}
+              </Fab> :
+              <Fab disabled key={idx} style={{width: '50px', margin: '3px', backgroundColor: 'white'}}>
+                <span> </span>
+              </Fab>
             ),
           )}
         </div>
